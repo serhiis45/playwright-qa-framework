@@ -22,15 +22,15 @@ schema.
 1. Add the response schema to `api/schemas.ts`, strictly from swagger.
 2. Add a method to the controller (create the controller if needed):
 
-```ts
-public async getMe() {
-  return this.send({
-    method: "GET",
-    url: `${this.BASE_PATH}/me`,
-    schema: GetMeSchema,
-  });
-}
-```
+   ```ts
+   public async getMe() {
+     return this.send({
+       method: "GET",
+       url: `${this.BASE_PATH}/me`,
+       schema: GetMeSchema,
+     });
+   }
+   ```
 
 - query params, body, files: `options: { params, data, multipart }`
 - the return type comes from the schema, no separate `export type` needed

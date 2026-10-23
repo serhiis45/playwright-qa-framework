@@ -70,7 +70,7 @@ say "add a method for `GET /...` from swagger".
 
 ## Structure
 
-```
+```text
 config/env.ts              env variables
 api/base/                  BaseController (request, status check, schema validation)
 api/controllers/           controllers, one per API area
