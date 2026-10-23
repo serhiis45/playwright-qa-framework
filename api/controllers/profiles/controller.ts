@@ -19,4 +19,13 @@ export class ProfilesController extends BaseController {
       schema: GetMeSchema,
     });
   }
+
+  public async updateMe(data: { bio?: string }) {
+    return this.send({
+      method: "PUT",
+      url: `${this.BASE_PATH}/me`,
+      schema: GetMeSchema,
+      options: { data },
+    });
+  }
 }
