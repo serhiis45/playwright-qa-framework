@@ -42,4 +42,34 @@ public async getMe() {
 ```ts
 import { test, expect } from "@playwright/test";
 import { signInAs } from "../../api/api";
+
+test("get my profile", async ({ request }) => {
+  const api = await signInAs(request, { username: "...", password: "..." });
+  const me = await api.profiles.getMe();
+  expect(me.data.id).toBeTruthy();
+});
 ```
+
+Negative test: enable negative mode on the controller, then call the same
+method.
+
+```ts
+api.profiles.setTestNegative(true);
+const response = await api.profiles.updateMe({ bio: "a".repeat(2049) });
+```
+
+- In negative mode the request must return any 4xx; the success schema is not
+  validated, and the error body is returned.
+- Exact status: pass `expectedStatus` to `send()` in the controller method (e.g.
+  `400`).
+
+## Rules
+
+- Schemas follow swagger. If the real response differs, report the mismatch to
+  the user before loosening the schema; never silently adapt the schema to the
+  response.
+- Test expectations come from requirements, not from backend behaviour.
+- Never read `.env`. Use `.env.example` to learn variable names.
+- Never commit real credentials, tokens or project API docs (`swagger.json` is
+  gitignored).
+- `API_BASE_URL` has no trailing slash; controller paths start with `/`.

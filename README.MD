@@ -34,18 +34,33 @@ extension (green ▶ next to the test).
 Reports: `npx playwright show-report`. Failed tests keep a trace with every
 request and response.
 
-## Manual request example
+## Request example
 
 ```ts
-import { test } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 import { signInAs } from "../../api/api";
 
-test("my profile", async ({ request }) => {
+test("get my profile", async ({ request }) => {
   const api = await signInAs(request, { username: "...", password: "..." });
   const me = await api.profiles.getMe();
-  console.log(JSON.stringify(me, null, 2));
+  expect(me.data.id).toBeTruthy();
 });
 ```
+
+## Negative test example
+
+```ts
+test("update profile with too long bio is rejected", async ({ request }) => {
+  const api = await signInAs(request, { username: "...", password: "..." });
+  api.profiles.setTestNegative(true);
+
+  const response = await api.profiles.updateMe({ bio: "a".repeat(2049) });
+  console.log(JSON.stringify(response, null, 2));
+});
+```
+
+`setTestNegative(true)` makes the controller expect any 4xx and return the error
+body instead of validating the success schema.
 
 ## Adding endpoints
 
