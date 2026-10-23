@@ -1,0 +1,17 @@
+{
+  "name": "playwright-qa-framework",
+  "author": "Serhii Soroka",
+  "version": "1.0.0",
+  "scripts": {
+    "test:api": "playwright test --config=api.config.ts --reporter=html --trace on"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^24"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "envalid": "^8.2.0",
+    "zod": "^4.3.6"
+  }
+}
