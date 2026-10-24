@@ -3,7 +3,7 @@
   "author": "Serhii Soroka",
   "version": "1.0.0",
   "scripts": {
-    "test:api": "playwright test --config=api.config.ts --reporter=html --trace on"
+    "test:api": "playwright test --config=playwright.api.config.ts --reporter=html --trace on"
   },
   "devDependencies": {
     "@playwright/test": "^1.58.2",
