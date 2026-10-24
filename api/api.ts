@@ -17,3 +17,7 @@ export async function signInAs(
 
   return new AppAPI(request, AuthenticationResult.AccessToken);
 }
+
+export function asGuest(request: APIRequestContext): AppAPI {
+  return new AppAPI(request);
+}

@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { signInAs } from "../../api/api";
+import { signInAs, asGuest } from "../../api/api";
 
 test("get my profile", async ({ request }) => {
   // GIVEN: signed-in user (Cognito sign-in, token is added to every request)
@@ -33,5 +33,19 @@ test("update profile with too long bio is rejected", async ({ request }) => {
 
   // THEN: the test fails if the API accepts it (2xx);
   // the error body is printed to see what the API returned
+  console.log(JSON.stringify(response, null, 2));
+});
+
+test("guest cannot get profile", async ({ request }) => {
+  // GIVEN: guest — no sign-in, requests go without a token
+  const api = asGuest(request);
+
+  // Negative mode: expect any 4xx (here 401), skip schema validation
+  api.profiles.setTestNegative(true);
+
+  // WHEN: guest requests a profile that needs authorization
+  const response = await api.profiles.getMe();
+
+  // THEN: the test fails if the API returns 2xx
   console.log(JSON.stringify(response, null, 2));
 });
