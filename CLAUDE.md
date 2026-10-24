@@ -37,6 +37,24 @@ schema.
 
 3. New controller: register it in `AppAPI` in `api/api.ts` (one line).
 
+## Endpoint without a schema
+
+If swagger schemas are unreliable and the goal is only to call endpoints and
+look at responses, use `z.unknown()`:
+
+```ts
+public async getMe() {
+  return this.send({
+    method: "GET",
+    url: `${this.BASE_PATH}/me`,
+    schema: z.unknown(), // no response validation
+  });
+}
+```
+
+Status is still checked. The response is not validated and has no field types.
+Add a real schema later when the endpoint becomes an autotest.
+
 ## Writing a test or a manual request
 
 ```ts
